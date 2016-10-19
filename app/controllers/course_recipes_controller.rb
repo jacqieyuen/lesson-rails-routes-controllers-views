@@ -1,7 +1,7 @@
 class CourseRecipesController < RecipesController
   before_action :set_course
 
-protected
+private
   def get_recipes
     if not @course.nil?
       @recipes = @course.recipes
@@ -16,7 +16,6 @@ protected
     end
   end
 
-private
   def set_course
     @course = Course.find_by(name: params[:course_id])
     if @course.nil?
