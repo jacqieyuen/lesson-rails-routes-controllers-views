@@ -1,0 +1,11 @@
+<h1>Recipes</h1>
+
+<% if @message %>
+  <h2><%= @message %></h2>
+<% end %>
+
+<ul>
+  <% @recipes.each do |recipe| %>
+    <li><a href=""><%= recipe.name %></a></li>
+  <% end %>
+</ul>
