@@ -1,27 +1,22 @@
 class CourseRecipesController < RecipesController
-  before_action :set_course
+  prepend_before_action :set_course
 
 private
-  def get_recipes
-    if not @course.nil?
-      @recipes = @course.recipes
-      @message = "No Recipes Found" if @recipes.empty?
-    end
+  def set_recipes
+    @recipes = @course.recipes
+    @message = "No Recipes Found" if @recipes.empty?
   end
 
-  def get_recipe
-    if not @course.nil?
-      @recipe = @course.recipes.find_by(id: params[:id])
-      @message = "Cannot Find Recipe With ID #{params[:id]}" if @recipe.nil?
-    end
+  def set_recipe
+    @recipe = @course.recipes.find_by(id: params[:id])
+    @message = "Cannot Find Recipe With ID #{params[:id]}" if @recipe.nil?
   end
 
   def set_course
     @course = Course.find_by(name: params[:course_id])
     if @course.nil?
-      @recipes = []
-      @recipe  = nil
-      @message = "Course Cannot Be Found"
+      @message = "Cannot Find Course Name '#{params[:course_id]}'"
+      render 'errors/not_found'
     end
   end
 

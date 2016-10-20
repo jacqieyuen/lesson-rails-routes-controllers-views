@@ -38,6 +38,10 @@ gem 'pry-rails'
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'
+  # Replaces the standard Rails error page
+  gem 'better_errors'
+  # Grab bindings from higher up the call stack and evaluate code
+  gem 'binding_of_caller'
 end
 
 group :development do

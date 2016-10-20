@@ -3,7 +3,7 @@ class RecipesController < ApplicationController
   before_action :set_parent_path
   before_action :set_courses_category, only: [:new, :edit]
   before_action :set_recipe, only: [:show, :edit, :update, :destroy]
-  before_action :get_recipes, only: [:index]
+  before_action :set_recipes, only: [:index]
 
   def index
     render 'recipes/index'
@@ -15,45 +15,47 @@ class RecipesController < ApplicationController
 
   def new
     @recipe = flash[:recipe].nil? ? Recipe.new :  Recipe.new(flash[:recipe])
+    render 'recipes/new'
   end
 
   def create
     @recipe = Recipe.new(recipe_params)
 
     if @recipe.save
-      redirect_to @recipe
+      redirect_to "#{@parent_path}#{recipe_path(@recipe)}"
     else
       flash[:recipe] = @recipe
       flash[:errors] = @recipe.errors.messages
-      redirect_to new_recipe_path
+      redirect_to "#{@parent_path}#{new_recipe_path}"
     end
   end
 
   def edit
     @recipe = flash[:recipe].nil? ? @recipe : Recipe.new(flash[:recipe])
+    render 'recipes/edit'
   end
 
   def update
     @recipe.assign_attributes(recipe_params)
 
     if @recipe.save
-      redirect_to @recipe
+      redirect_to "#{@parent_path}#{recipe_path(@recipe)}"
     else
       flash[:recipe] = @recipe
       flash[:errors] = @recipe.errors.messages
-      redirect_to edit_recipe_path
+      redirect_to "#{@parent_path}#{edit_recipe_path}"
     end
   end
 
 private
-  def get_recipes
+  def set_recipes
     @recipes = Recipe.all
     @message = "No Recipes Found" if @recipes.empty?
   end
 
   def set_recipe
     @recipe  = Recipe.find_by(id: params[:id])
-    @message = "Cannot Find Recipe With ID #{params[:id]}"
+    @message = "Cannot Find Recipe With ID #{params[:id]}" if @recipe.nil?
   end
 
   def set_errors
@@ -61,7 +63,7 @@ private
   end
 
   def set_courses_category
-    @courses = Course.order(:name).pluck(:name, :id)
+    @courses_categories = Course.order(:name).pluck(:name, :id)
   end
 
   def set_parent_path

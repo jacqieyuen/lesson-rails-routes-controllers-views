@@ -26,7 +26,7 @@
   <div class="field">
     <label for="recipe_instructions">Course</label>
     <select name="recipe[course_id]">
-      <% @courses.each do |course| %>
+      <% @courses_categories.each do |course| %>
         <option value="<%= course[1] %>" <%= 'selected' if @recipe.course_id == course[1] %>><%= course[0] %></option>
       <% end %>
     </select>
