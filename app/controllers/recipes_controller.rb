@@ -47,6 +47,13 @@ class RecipesController < ApplicationController
     end
   end
 
+  def destroy
+    if !@recipe.nil?
+      @recipe.destroy
+    end
+    redirect_to "#{@parent_path}#{recipes_path}"
+  end
+
 private
   def set_recipes
     @recipes = Recipe.all
