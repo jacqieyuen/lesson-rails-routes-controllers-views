@@ -3,7 +3,7 @@ class IngredientRecipesController < RecipesController
 
 private
   def set_recipes
-    @recipes = @ingredient.recipes
+    @recipes = @ingredient.recipes.includes(:ingredients)
     @message = "No Recipes Found" if @recipes.empty?
   end
 

@@ -31,6 +31,18 @@
       <% end %>
     </select>
   </div>
+  <div class="field">
+    <label for="recipe_ingredients">ingredient</label>
+    <input type="text" name="recipe[ingredients][]" id="recipe_ingredients" value="<%= @recipe.ingredients[0].name if !@recipe.ingredients[0].nil?%>">
+  </div>
+  <div class="field">
+    <label for="recipe_ingredients">ingredient</label>
+    <input type="text" name="recipe[ingredients][]" id="recipe_ingredients" value="<%= @recipe.ingredients[1].name if !@recipe.ingredients[1].nil?%>">
+  </div>
+  <div class="field">
+    <label for="recipe_ingredients">ingredient</label>
+    <input type="text" name="recipe[ingredients][]" id="recipe_ingredients" value="<%= @recipe.ingredients[2].name if !@recipe.ingredients[2].nil?%>">
+  </div>
   <div class="actions">
     <button type="submit"><%= button_message %></button>
   </div>

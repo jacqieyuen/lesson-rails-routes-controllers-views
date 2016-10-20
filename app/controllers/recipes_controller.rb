@@ -22,6 +22,10 @@ class RecipesController < ApplicationController
     @recipe = Recipe.new(recipe_params)
 
     if @recipe.save
+      recipe_ingredients_params[:ingredients].each do |ingredient_name|
+        ingredient = Ingredient.find_or_create_by(name: ingredient_name)
+        @recipe.recipe_ingredient_lists.create(ingredient_id: ingredient.id)
+      end
       redirect_to "#{@parent_path}#{recipe_path(@recipe)}"
     else
       flash[:recipe] = @recipe
@@ -56,7 +60,7 @@ class RecipesController < ApplicationController
 
 private
   def set_recipes
-    @recipes = Recipe.all
+    @recipes = Recipe.includes(:ingredients).all
     @message = "No Recipes Found" if @recipes.empty?
   end
 
@@ -80,5 +84,9 @@ private
 
   def recipe_params
     params.require(:recipe).permit(:name, :instructions, :servings, :course_id)
+  end
+
+  def recipe_ingredients_params
+    params.require(:recipe).permit(ingredients: [])
   end
 end
