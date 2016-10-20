@@ -1,0 +1,2 @@
+module CourseRecipesHelper
+end
